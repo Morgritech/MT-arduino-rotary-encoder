@@ -25,7 +25,42 @@ RotaryEncoder::RotaryEncoder(uint16_t gpio_a_pin, uint16_t gpio_b_pin, uint16_t 
 
 RotaryEncoder::~RotaryEncoder() {}
 
-RotaryEncoder::RotationDirection RotaryEncoder::DetectRotation() { return RotationDirection(); }
+RotaryEncoder::RotationDirection RotaryEncoder::DetectRotation() {
+  RotationDirection rotation_direction = RotationDirection::kNeutral;
+
+  if (first_iteration_ == true){
+    previous_b_pin_state_ = static_cast<PinState>(digitalRead(gpio_b_pin_));
+    first_iteration_ = false;
+  }
+  else if (debounce_status_ == PinDebouncer::Status::kNotStarted && debouncing_rotation_ == false) {
+    // No encoder rotation has occurred yet.
+    current_b_pin_state_ = static_cast<PinState>(digitalRead(gpio_b_pin_));
+    if (current_b_pin_state_ != previous_b_pin_state_) {
+      // Rotation has occurred.
+      debounce_status_ = PinDebouncer::Status::kOngoing;
+    }
+  }
+  else if (debounce_status_ == PinDebouncer::Status::kNotStarted && debouncing_rotation_ == true) {
+    // Finished debouncing rotation.
+    //current_b_pin_state_ = static_cast<PinState>(digitalRead(gpio_b_pin_)); // Read it again after it has settled?
+    PinState current_a_pin_state = static_cast<PinState>(digitalRead(gpio_a_pin_));
+    
+    if (current_a_pin_state != current_b_pin_state_) {
+      rotation_direction = RotationDirection::kPositive;
+    }
+    else {
+      rotation_direction = RotationDirection::kNegative;
+    }
+
+    previous_b_pin_state_ = current_b_pin_state_;
+  }
+
+  if (debounce_status_ == PinDebouncer::Status::kOngoing) {
+    debounce_status_ = pin_debouncer_.DebouncePin();
+  }
+
+  return RotationDirection();
+}
 
 float RotaryEncoder::GetAngularPosition(AngleUnits angle_units) const { return 0.0f; }
 

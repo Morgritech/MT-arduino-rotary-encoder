@@ -75,6 +75,14 @@ class RotaryEncoder {
   PinDebouncer pin_debouncer_;
   /// @brief The status of the debounce operation during rotation detection.
   PinDebouncer::Status debounce_status_ = PinDebouncer::Status::kNotStarted;
+  /// @brief Flag to determine when the first iteration for rotation detection has occurred.
+  bool first_iteration_ = true;
+  /// @brief The pin state for the previous iteration during rotation detection.
+  PinState previous_b_pin_state_;
+  /// @brief The pin state for the current iteration during rotation detection.
+  PinState current_b_pin_state_;
+  /// @brief Flag to keep track of when the debounce of a rotation is ongoing during rotation detection.
+  bool debouncing_rotation_ = false;
 };
 
 } // namespace mt
