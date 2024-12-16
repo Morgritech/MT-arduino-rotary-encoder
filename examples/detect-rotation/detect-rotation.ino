@@ -16,7 +16,7 @@ const uint8_t kContactBPin = 3; ///< Input pin for the encoder contact B.
 uint8_t kNoOfDetents = 24; ///< The number of detents within the maximum rotation angle.
 uint8_t kMaxRotationAngleDegrees = 360; ///< The maximum rotation angle (degrees).
 
-/// @brief The Period of time in milliseconds (ms) for debouncing the button pin.
+/// @brief The Period of time in milliseconds (ms) for debouncing the encoder contact pins.
 const uint16_t kContactDebouncePeriod_ms = 20;
 
 /// @brief The Rotary Encoder instance for the encoder.
