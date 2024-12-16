@@ -25,6 +25,12 @@ class RotaryEncoder {
     kHigh,
   };
 
+  /// @brief Enum of angular units.
+  enum class AngleUnits {
+    kDetents = 0,
+    kDegrees,
+  };
+
   /// @brief Enum of detent states/rotation directions.
   enum class RotationDirection {
     kNegative = -1,
@@ -48,9 +54,10 @@ class RotaryEncoder {
   /// @return The rotation state/direction at the time of checking.
   RotationDirection DetectRotation(); ///< This must be called periodically.
 
-  /// @brief Get the current (absolute) angular position (degrees).
-  /// @return The current angular position (degrees).
-  float GetAngularPosition() const;
+  /// @brief Get the current angular position (degrees).
+  /// @param angle_units The units required for the angle.
+  /// @return The current angular position.
+  float GetAngularPosition(AngleUnits angle_units) const;
 
  private:
 
@@ -64,6 +71,7 @@ class RotaryEncoder {
   uint16_t max_rotation_angle_degrees_;
   /// @brief The current angular position (detents (steps)).
   uint32_t angular_position_detents_ = 0;
+  /// @brief A pin debouncer object to handle encoder contacts debouncing.
   PinDebouncer pin_debouncer_;
   /// @brief The status of the debounce operation during rotation detection.
   PinDebouncer::Status debounce_status_ = PinDebouncer::Status::kNotStarted;

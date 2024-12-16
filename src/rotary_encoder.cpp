@@ -25,6 +25,8 @@ RotaryEncoder::RotaryEncoder(uint16_t gpio_a_pin, uint16_t gpio_b_pin, uint16_t 
 
 RotaryEncoder::~RotaryEncoder() {}
 
-float RotaryEncoder::GetAngularPosition() const { return 0.0f; }
+RotationDirection RotaryEncoder::DetectRotation() { return RotationDirection(); }
+
+float RotaryEncoder::GetAngularPosition(AngleUnits angle_units) const { return 0.0f; }
 
 }  // namespace mt
