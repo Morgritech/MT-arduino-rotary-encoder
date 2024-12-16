@@ -17,10 +17,10 @@ uint8_t kNoOfDetents = 24; ///< The number of detents within the maximum rotatio
 uint8_t kMaxRotationAngleDegrees = 360; ///< The maximum rotation angle (degrees).
 
 /// @brief The Period of time in milliseconds (ms) for debouncing the button pin.
-const uint16_t kButtonDebouncePeriod_ms = 20;
+const uint16_t kContactDebouncePeriod_ms = 20;
 
 /// @brief The Rotary Encoder instance for the encoder.
-mt::RotaryEncoder rotary_encoder(kContactAPin, kContactBPin, kButtonDebouncePeriod_ms, kNoOfDetents, kMaxRotationAngleDegrees);
+mt::RotaryEncoder rotary_encoder(kContactAPin, kContactBPin, kContactDebouncePeriod_ms, kNoOfDetents, kMaxRotationAngleDegrees);
 //mt::RotaryEncoder rotary_encoder(kContactAPin, kContactBPin); // Default values: debounce period = 70 ms, no. of detents = 24, max rotation angle = 360 degrees.
 
 /// @brief The serial communication speed.

@@ -16,7 +16,7 @@ namespace mt {
 
 RotaryEncoder::RotaryEncoder(uint16_t gpio_a_pin, uint16_t gpio_b_pin, uint16_t debounce_period_ms,
                              uint16_t no_of_detents, uint16_t max_rotation_angle_degrees)
-    : button_debouncer_(gpio_a_pin, debounce_period_ms) {
+    : pin_debouncer_(gpio_a_pin, debounce_period_ms) {
   gpio_a_pin_ = gpio_a_pin_;
   gpio_b_pin_ = gpio_b_pin_;
   no_of_detents = no_of_detents_;
@@ -25,7 +25,7 @@ RotaryEncoder::RotaryEncoder(uint16_t gpio_a_pin, uint16_t gpio_b_pin, uint16_t 
 
 RotaryEncoder::~RotaryEncoder() {}
 
-RotationDirection RotaryEncoder::DetectRotation() { return RotationDirection(); }
+RotaryEncoder::RotationDirection RotaryEncoder::DetectRotation() { return RotationDirection(); }
 
 float RotaryEncoder::GetAngularPosition(AngleUnits angle_units) const { return 0.0f; }
 
