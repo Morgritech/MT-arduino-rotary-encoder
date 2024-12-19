@@ -16,7 +16,7 @@ namespace mt {
 
 RotaryEncoder::RotaryEncoder(uint16_t gpio_a_pin, uint16_t gpio_b_pin, uint16_t debounce_period_ms,
                              uint16_t no_of_detents, uint16_t max_rotation_angle_degrees)
-    : pin_debouncer_(gpio_a_pin, debounce_period_ms) {
+    : pin_debouncer_(gpio_b_pin, debounce_period_ms) {
   gpio_a_pin_ = gpio_a_pin_;
   gpio_b_pin_ = gpio_b_pin_;
   no_of_detents = no_of_detents_;
@@ -47,9 +47,11 @@ RotaryEncoder::RotationDirection RotaryEncoder::DetectRotation() {
     
     if (current_a_pin_state != current_b_pin_state_) {
       rotation_direction = RotationDirection::kPositive;
+      angular_position_detents_ ++;
     }
     else {
       rotation_direction = RotationDirection::kNegative;
+      angular_position_detents_ --;
     }
 
     previous_b_pin_state_ = current_b_pin_state_;
