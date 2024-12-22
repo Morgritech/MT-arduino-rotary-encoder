@@ -9,19 +9,16 @@
 #include <rotary_encoder.h>
 
 // GPIO pins.
-const uint8_t kContactAPin = 2; ///< Input pin for the encoder contact A.
-const uint8_t kContactBPin = 3; ///< Input pin for the encoder contact B.
+const uint8_t kContactAPin = 24;//2; ///< Input pin for the encoder contact A.
+const uint8_t kContactBPin = 23;//3; ///< Input pin for the encoder contact B.
 
 // Rotary encoder properties.
-uint8_t kNoOfDetents = 24; ///< The number of detents within the maximum rotation angle.
-uint8_t kMaxRotationAngleDegrees = 360; ///< The maximum rotation angle (degrees).
-
-/// @brief The Period of time in milliseconds (ms) for debouncing the encoder contact pins.
-const uint16_t kContactDebouncePeriod_ms = 20;
+uint8_t kNoOfDetents = 20; ///< The number of detents within the maximum rotation angle.
+uint16_t kMaxRotationAngleDegrees = 360; ///< The maximum rotation angle (degrees).
 
 /// @brief The Rotary Encoder instance for the encoder.
-mt::RotaryEncoder rotary_encoder(kContactAPin, kContactBPin, kContactDebouncePeriod_ms, kNoOfDetents, kMaxRotationAngleDegrees);
-//mt::RotaryEncoder rotary_encoder(kContactAPin, kContactBPin); // Default values: debounce period = 70 ms, no. of detents = 24, max rotation angle = 360 degrees.
+mt::RotaryEncoder rotary_encoder(kContactAPin, kContactBPin, kNoOfDetents, kMaxRotationAngleDegrees);
+//mt::RotaryEncoder rotary_encoder(kContactAPin, kContactBPin); // Default values: no. of detents = 24, max rotation angle = 360 degrees.
 
 /// @brief The serial communication speed.
 const int kBaudRate = 9600;
@@ -32,8 +29,8 @@ void setup() {
   Serial.begin(kBaudRate);
 
   // Initialise the input pins.
-  pinMode(kContactAPin, INPUT);
-  pinMode(kContactBPin, INPUT);
+  pinMode(kContactAPin, INPUT_PULLUP);
+  pinMode(kContactBPin, INPUT_PULLUP);
 
   Serial.println(F("\n...Setup complete...\n"));
 }
@@ -44,11 +41,11 @@ void loop() {
   mt::RotaryEncoder::RotationDirection rotation_direction = rotary_encoder.DetectRotation(); // This must be called periodically.
 
   if (rotation_direction != mt::RotaryEncoder::RotationDirection::kNeutral) {
-    if (rotation_direction == mt::RotaryEncoder::RotationDirection::kNegative) {
-      Serial.println(F("Negative direction."));
+    if (rotation_direction == mt::RotaryEncoder::RotationDirection::kPositive) {
+      Serial.println(F("Positive direction."));
     }
     else {
-      Serial.println(F("Positive direction."));
+      Serial.println(F("Negative direction."));
     }
 
     // Get the angular position (Detents).
@@ -57,6 +54,6 @@ void loop() {
 
     // Get the angular position (Degrees).
     Serial.print(F("Angular position (Degrees): "));
-    Serial.println(rotary_encoder.GetAngularPosition(mt::RotaryEncoder::AngleUnits::kDegrees));    
+    Serial.println(rotary_encoder.GetAngularPosition(mt::RotaryEncoder::AngleUnits::kDegrees));
   }
 }
