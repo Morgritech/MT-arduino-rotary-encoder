@@ -9,8 +9,8 @@
 #include <rotary_encoder.h>
 
 // GPIO pins.
-const uint8_t kContactAPin = 24;//2; ///< Input pin for the encoder contact A.
-const uint8_t kContactBPin = 23;//3; ///< Input pin for the encoder contact B.
+const uint8_t kContactAPin = 2; ///< Input pin for the encoder contact A.
+const uint8_t kContactBPin = 3; ///< Input pin for the encoder contact B.
 
 // Rotary encoder properties.
 uint8_t kNoOfDetents = 20; ///< The number of detents within the maximum rotation angle.
