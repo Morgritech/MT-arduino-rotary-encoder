@@ -11,8 +11,6 @@
 
 #include <Arduino.h>
 
-#include <pin_debouncer.h>
-
 namespace mt {
 
 /// @brief The Rotary Encoder class.
@@ -25,6 +23,12 @@ class RotaryEncoder {
     kHigh,
   };
 
+  /// @brief Enum of angular units.
+  enum class AngleUnits {
+    kDetents = 0,
+    kDegrees,
+  };
+
   /// @brief Enum of detent states/rotation directions.
   enum class RotationDirection {
     kNegative = -1,
@@ -35,11 +39,10 @@ class RotaryEncoder {
   /// @brief Construct a Rotary Encoder object.
   /// @param gpio_a_pin The GPIO input pin assigned to the encoder contact A.
   /// @param gpio_b_pin The GPIO input pin assigned to the encoder contact B.
-  /// @param debounce_period_ms The period of time (ms) allowed for pin debouncing.
   /// @param no_of_detents The number of detents within the maximum rotation angle.
   /// @param max_rotation_angle_degrees The maximum rotation angle (degrees).
-  RotaryEncoder(uint16_t gpio_a_pin, uint16_t gpio_b_pin, uint16_t debounce_period_ms = 70,
-                uint16_t no_of_detents = 24, uint16_t max_rotation_angle_degrees = 360);
+  RotaryEncoder(uint16_t gpio_a_pin, uint16_t gpio_b_pin, uint16_t no_of_detents = 24,
+                uint16_t max_rotation_angle_degrees = 360);
 
   /// @brief Destroy the Rotary Encoder object.
   ~RotaryEncoder();
@@ -48,11 +51,15 @@ class RotaryEncoder {
   /// @return The rotation state/direction at the time of checking.
   RotationDirection DetectRotation(); ///< This must be called periodically.
 
-  /// @brief Get the current (absolute) angular position (degrees).
-  /// @return The current angular position (degrees).
-  float GetAngularPosition() const;
+  /// @brief Get the current angular position (degrees).
+  /// @param angle_units The units required for the angle.
+  /// @return The current angular position.
+  float GetAngularPosition(AngleUnits angle_units) const;
 
  private:
+
+  // Pre-calculated unit conversion constants.
+  float kMaxRotationAngleDegreesDividedByNoOfDetents_; ///< max rotation angle in degrees / no. of detents.
 
   /// @brief The GPIO input pin assigned to the encoder contact A.
   uint16_t gpio_a_pin_;
@@ -64,9 +71,22 @@ class RotaryEncoder {
   uint16_t max_rotation_angle_degrees_;
   /// @brief The current angular position (detents (steps)).
   uint32_t angular_position_detents_ = 0;
-  PinDebouncer pin_debouncer_;
-  /// @brief The status of the debounce operation during rotation detection.
-  PinDebouncer::Status debounce_status_ = PinDebouncer::Status::kNotStarted;
+  /// @brief The default pin state when there is no rotation.
+  PinState default_pin_state_; 
+  /// @brief Contact A pin state during rotation detection.
+  PinState gpio_a_pin_state_;
+  /// @brief Contact B pin state during rotation detection.
+  PinState gpio_b_pin_state_;
+  /// @brief Flag to determine when the first iteration for rotation detection has occurred.
+  bool first_iteration_ = true;
+  /// @brief The current step in the rotation cycle.
+  uint8_t current_step_ = 0;
+  /// @brief The previous step in the rotation cycle.
+  uint8_t previous_step_ = 0;
+  /// @brief Flag to determine when a rotation cycle has finished (1 cycle = 1 detent).
+  bool cycle_finished_ = true;
+  /// @brief The direction of rotation.
+  int8_t direction_ = 0;
 };
 
 } // namespace mt
