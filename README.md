@@ -6,6 +6,6 @@ This library implements non-blocking functions to detect encoder rotation action
 
 For rotary encoders with an integrated push-button switch, this library can be used with the [MT-arduino-momentary-button](https://github.com/Morgritech/MT-arduino-momentary-button) library.
 
-See the "examples" folder for how to get started on using the library.
+See the [examples](examples) folder for how to get started on using the library.
 
 This library can be installed via the Arduino Library Manager.
