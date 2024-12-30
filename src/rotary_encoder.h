@@ -56,6 +56,9 @@ class RotaryEncoder {
   /// @return The current angular position.
   float GetAngularPosition(AngleUnits angle_units) const;
 
+  /// @brief Reset the angular position to zero.
+  void ResetAngularPosition();
+
  private:
 
   // Pre-calculated unit conversion constants.
