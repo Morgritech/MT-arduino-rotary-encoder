@@ -38,7 +38,7 @@ void setup() {
 /// @brief The continuously running function for repetitive tasks.
 void loop() {
   // Detect encoder rotation (and direction).
-  mt::RotaryEncoder::RotationDirection rotation_direction = rotary_encoder.DetectRotation(); // This must be called periodically.
+  mt::RotaryEncoder::RotationDirection rotation_direction = rotary_encoder.DetectRotation(); // This must be called repeatedly.
 
   if (rotation_direction != mt::RotaryEncoder::RotationDirection::kNeutral) {
     if (rotation_direction == mt::RotaryEncoder::RotationDirection::kPositive) {

@@ -49,7 +49,7 @@ class RotaryEncoder {
 
   /// @brief Check if the encoder has been rotated, and in what direction.
   /// @return The rotation state/direction at the time of checking.
-  RotationDirection DetectRotation(); ///< This must be called periodically.
+  RotationDirection DetectRotation(); ///< This must be called repeatedly.
 
   /// @brief Get the current angular position (degrees).
   /// @param angle_units The units required for the angle.
