@@ -14,10 +14,10 @@ const uint8_t kContactBPin = 3; ///< Input pin for the encoder contact B.
 
 // Rotary encoder properties.
 uint8_t kNoOfDetents = 20; ///< The number of detents within the maximum rotation angle.
-uint16_t kMaxRotationAngleDegrees = 360; ///< The maximum rotation angle (degrees).
+uint16_t kMaxRotationAngle_degrees = 360; ///< The maximum rotation angle (degrees).
 
 /// @brief The Rotary Encoder instance for the encoder.
-mt::RotaryEncoder rotary_encoder(kContactAPin, kContactBPin, kNoOfDetents, kMaxRotationAngleDegrees);
+mt::RotaryEncoder rotary_encoder(kContactAPin, kContactBPin, kNoOfDetents, kMaxRotationAngle_degrees);
 //mt::RotaryEncoder rotary_encoder(kContactAPin, kContactBPin); // Default values: no. of detents = 24, max rotation angle = 360 degrees.
 
 /// @brief The serial communication speed.
@@ -38,7 +38,7 @@ void setup() {
 /// @brief The continuously running function for repetitive tasks.
 void loop() {
   // Detect encoder rotation (and direction).
-  mt::RotaryEncoder::RotationDirection rotation_direction = rotary_encoder.DetectRotation(); // This must be called periodically.
+  mt::RotaryEncoder::RotationDirection rotation_direction = rotary_encoder.DetectRotation(); // This must be called repeatedly.
 
   if (rotation_direction != mt::RotaryEncoder::RotationDirection::kNeutral) {
     if (rotation_direction == mt::RotaryEncoder::RotationDirection::kPositive) {

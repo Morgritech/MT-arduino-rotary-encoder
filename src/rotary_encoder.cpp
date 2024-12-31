@@ -121,4 +121,8 @@ float RotaryEncoder::GetAngularPosition(AngleUnits angle_units) const {
   return angular_position;
 }
 
+void RotaryEncoder::ResetAngularPosition() {
+  angular_position_detents_ = 0;
+}
+
 } // namespace mt

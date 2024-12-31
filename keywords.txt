@@ -1,0 +1,32 @@
+######################################################
+# Syntax Colouring Map For MT-arduino-rotary-encoder
+######################################################
+
+######################################################
+# Datatypes (KEYWORD1)
+######################################################
+
+RotaryEncoder	KEYWORD1
+PinState	KEYWORD1
+AngleUnits	KEYWORD1
+RotationDirection	KEYWORD1
+
+######################################################
+# Methods and Functions (KEYWORD2)
+######################################################
+
+DetectRotation	KEYWORD2
+GetAngularPosition	KEYWORD2
+ResetAngularPosition	KEYWORD2
+
+######################################################
+# Constants (LITERAL1)
+######################################################
+
+kLow	LITERAL1
+kHigh	LITERAL1
+kDetents	LITERAL1
+kDegrees	LITERAL1
+kNegative	LITERAL1
+kNeutral	LITERAL1
+kPositive	LITERAL1
