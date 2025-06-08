@@ -18,19 +18,19 @@ class RotaryEncoder {
  public:
 
   /// @brief Enum of GPIO pin states.
-  enum class PinState {
+  enum class PinState : uint8_t {
     kLow = 0,
     kHigh,
   };
 
   /// @brief Enum of angular units.
-  enum class AngleUnits {
+  enum class AngleUnits : uint8_t {
     kDetents = 0,
     kDegrees,
   };
 
   /// @brief Enum of detent states/rotation directions.
-  enum class RotationDirection {
+  enum class RotationDirection : int8_t {
     kNegative = -1,
     kNeutral = 0,
     kPositive = 1,
