@@ -9,19 +9,19 @@
 #include <rotary_encoder.h>
 
 // GPIO pins.
-const uint8_t kContactAPin = 2; ///< Input pin for the encoder contact A.
-const uint8_t kContactBPin = 3; ///< Input pin for the encoder contact B.
+constexpr uint8_t kContactAPin = 2; ///< Input pin for the encoder contact A.
+constexpr uint8_t kContactBPin = 3; ///< Input pin for the encoder contact B.
 
 // Rotary encoder properties.
 uint8_t kNoOfDetents = 20; ///< The number of detents within the maximum rotation angle.
 uint16_t kMaxRotationAngle_degrees = 360; ///< The maximum rotation angle (degrees).
 
 /// @brief The Rotary Encoder instance for the encoder.
-mt::RotaryEncoder rotary_encoder(kContactAPin, kContactBPin, kNoOfDetents, kMaxRotationAngle_degrees);
-//mt::RotaryEncoder rotary_encoder(kContactAPin, kContactBPin); // Default values: no. of detents = 24, max rotation angle = 360 degrees.
+mt::RotaryEncoder rotary_encoder{kContactAPin, kContactBPin, kNoOfDetents, kMaxRotationAngle_degrees};
+//mt::RotaryEncoder rotary_encoder{kContactAPin, kContactBPin}; // Default values: no. of detents = 24, max rotation angle = 360 degrees.
 
 /// @brief The serial communication speed.
-const int kBaudRate = 9600;
+constexpr int kBaudRate = 9600;
 
 /// @brief The main application entry point for initialisation tasks.
 void setup() {
